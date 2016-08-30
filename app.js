@@ -11,6 +11,7 @@ var app                  = express();
 
 mongoose.connect('mongodb://localhost/passport_auth_app');
 app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({extended: true})); // needed when using a form
 
 app.use(require('express-session')({
     secret: 'One for the money and two for the road',
@@ -25,6 +26,8 @@ app.use(passport.session());   // 2) required for PASSPORT use
 passport.serializeUser(User.serializeUser()); // re-encrypts our data
 passport.deserializeUser(User.deserializeUser()); // decrypts our data
 
+//=============================================================================
+// ROUTES:
 app.get('/', function(req, res){
     res.render('home.ejs');
 });
@@ -33,9 +36,30 @@ app.get('/secret', function(req, res){
     res.render('secret.ejs');
 });
 
+// AUTH Routes:
+// sign up form
+app.get('/register', function(req, res){
+    res.render('register.ejs');
+});
+// handle user sign up
+app.post('/register', function(req, res){
 
+    req.body.username; // info taken from "name" of form in register.ejs
+    req.body.passowrd; // info taken from "name" of form in register.ejs
+    //                           user we want to create
+    User.register(new User({username: req.body.username}), req.body.password, function(err, user){
+        if (err) {
+            console.log("There has been an error:");
+            console.log(err);
+            return res.render('register');
+        }
 
-
+        // passport-local-mongoose auth:
+        passport.authenticate('local')(req, res, function(){
+            res.redirect('/secret');
+        });
+    });
+});
 
 
 
