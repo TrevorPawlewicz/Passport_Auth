@@ -3,7 +3,7 @@ var express              = require('express');
 var mongoose             = require('mongoose');
 var passport             = require('passport');
 var bodyParser           = require('body-parser');
-var localStrategy        = require('passport-local');
+var LocalStrategy        = require('passport-local');
 var passortLocalMongoose = require('passport-local-mongoose');
 //
 var User                 = require('./models/user.js');
@@ -22,7 +22,8 @@ app.use(require('express-session')({
 app.use(passport.initialize()); // 1) required for PASSPORT use
 app.use(passport.session());   // 2) required for PASSPORT use
 
-// 2 methods that come with PASSPORT we added to our schema in user.js:
+// methods that come with PASSPORT we added to our schema in user.js:
+passport.use(new LocalStrategy(User.authenticate())); // auth method
 passport.serializeUser(User.serializeUser()); // re-encrypts our data
 passport.deserializeUser(User.deserializeUser()); // decrypts our data
 
@@ -31,12 +32,12 @@ passport.deserializeUser(User.deserializeUser()); // decrypts our data
 app.get('/', function(req, res){
     res.render('home.ejs');
 });
-
-app.get('/secret', function(req, res){
+//                 MIDDLEWARE
+app.get('/secret', isLoggedIn, function(req, res){
     res.render('secret.ejs');
 });
 
-// AUTH Routes:
+// AUTH Routes: ---------------------------------------------------------------
 // sign up form
 app.get('/register', function(req, res){
     res.render('register.ejs');
@@ -61,18 +62,40 @@ app.post('/register', function(req, res){
     });
 });
 
+// LOGIN Routes: --------------------------------------------------------------
+// render the login form
+app.get('/login', function(req, res){
+    res.render('login.ejs');
+});
+
+// login logic using passport MIDDLEWARE
+app.post('/login', passport.authenticate('local', {
+    successRedirect: '/secret',
+    failureRedirect: '/login'
+    }), function(req, res){
+        if (err) {
+            console.log(err);
+        } else {
+
+        }
+});
+
+// logout
+app.get('/logout', function(req, res){
+    req.logout(); // passport method destoys ALL user data
+    res.redirect('/');
+});
 
 
+// our MIDDLEWARE
+function isLoggedIn(req, res, next){
+    //      passport method
+    if (req.isAuthenticated()) {
+        return next(); // keep going
+    }
 
-
-
-
-
-
-
-
-
-
+    res.redirect('/login');
+};
 
 
 
