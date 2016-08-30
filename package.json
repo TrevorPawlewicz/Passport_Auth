@@ -1,0 +1,29 @@
+{
+  "name": "passport_auth_demo",
+  "version": "1.0.0",
+  "description": "Authorization example using Passport Local/Mongoose and Express-Session.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TrevorPawlewicz/Passport_Auth.git"
+  },
+  "author": "trev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TrevorPawlewicz/Passport_Auth/issues"
+  },
+  "homepage": "https://github.com/TrevorPawlewicz/Passport_Auth#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "ejs": "^2.5.1",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "mongoose": "^4.5.10",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^4.0.0"
+  }
+}
