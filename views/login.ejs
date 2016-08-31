@@ -1,8 +1,31 @@
-<h1>Login.ejs</h1>
+<% include ./partials/header %>
+<!-- ______^partial header^_________________________________________________-->
 
 
-<form action="/login" method="POST">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
-    <button>Login</button>
-</form>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>Login.ejs</h1>
+
+            <form class="form-inline" action="/login" method="POST">
+                <div class="form-group">
+                    <label class="sr-only">Username</label>
+                    <input class="form-control" type="text" name="username" placeholder="username">
+                </div>
+
+                <div class="form-group">
+                    <label class="sr-only">Password</label>
+                    <input class="form-control" type="password" name="password" placeholder="password">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- _____________________________partial footer___________________________ -->
+<% include ./partials/footer %>

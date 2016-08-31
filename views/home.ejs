@@ -1,5 +1,16 @@
+<% include ./partials/header %>
+<!-- ______^partial header^_________________________________________________-->
+
 <h1>home.ejs</h1>
 
-<li><a href="/register">Sign Up!</a></li>
-<li><a href="/login">Login!</a></li>
-<li><a href="/logout">Logout!</a></li>
+<form class="" action="index.html" method="post">
+    <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+</form>
+
+
+<!-- _____________________________partial footer___________________________ -->
+<% include ./partials/footer %>

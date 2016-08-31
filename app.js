@@ -9,9 +9,12 @@ var passortLocalMongoose = require('passport-local-mongoose');
 var User                 = require('./models/user.js');
 var app                  = express();
 
-mongoose.connect('mongodb://localhost/passport_auth_app');
-app.set('view engine', 'ejs');
+// APP Config -----------------------------------------------------------------
+mongoose.connect('mongodb://localhost/passport_auth_app'); // for mongo database
+app.set('view engine', 'ejs'); // direct ejs's to view folder
+app.use(express.static('public')); // directs express to our public folder
 app.use(bodyParser.urlencoded({extended: true})); // needed when using a form
+// APP Config -----------------------------------------------------------------
 
 app.use(require('express-session')({
     secret: 'One for the money and two for the road',
@@ -87,7 +90,7 @@ app.get('/logout', function(req, res){
 });
 
 
-// our MIDDLEWARE
+// our MIDDLEWARE using passport
 function isLoggedIn(req, res, next){
     //      passport method
     if (req.isAuthenticated()) {
